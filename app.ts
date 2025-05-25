@@ -10,9 +10,12 @@ import { authMW } from './middleware/authentication'
 import helmet, { xssFilter } from 'helmet'
 import cors from 'cors'
 import rateLimiter from 'express-rate-limit'
+import swaggerUI from 'swagger-ui-express'
+import YAML from 'yamljs'
 
 const app = express()
 dotenv.config()
+const swaggerDocument = YAML.load('./swagger.yaml')
 
 // Middleware
 app.use(express.json() )
@@ -31,6 +34,10 @@ app.use(rateLimiter({
 // routers
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/jobs', authMW, jobsRouter)
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+app.get('/', (req, res) => {
+  res.send(' <h1>Jobs API</h1> <a href="/api-docs">API Documentation</a> ')
+})
 
 server(app)
 

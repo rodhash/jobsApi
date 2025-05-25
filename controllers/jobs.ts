@@ -51,7 +51,7 @@ export const getAllJobs = AW(async(req: AuthenticatedRequest, res: Response) => 
 export const getJob = AW(async(req: AuthenticatedRequest, res: Response, next: NextFunction) => {
 
   const { user: { userId }, params: { id: jobId } } = req
-  const job = await Job.findOne({ _id: jobId, createdById: userId })
+  const job = await Job.findOne({ _id: jobId, createdById: userId }).setOptions({sanitizeFilter: true})
 
   if (!job) {
     return next(new NotFound(`Job ${jobId} not found`))

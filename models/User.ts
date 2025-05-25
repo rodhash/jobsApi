@@ -11,6 +11,8 @@ interface IUser extends Document {
   comparePassword(candidatePassword: string): boolean
 }
 
+mongoose.set('sanitizeFilter', true)
+
 const UserSchema = new mongoose.Schema<IUser>({
   name: {
     type: String,

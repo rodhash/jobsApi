@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Jobs API
+  version: '1.0'
+servers:
+  - url: https://jobsapi-3rpx.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Create a new job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: string
+                position:
+                  type: string
+      responses:
+        "200":
+          description: ''
+          headers: {}
+      security: []
+
+  /auth/login:
+    post:
+      deprecated: false
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components
+                /schemas
+                /LoginUserRequest'
+            example:
+              name: bob
+              email: bob@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
