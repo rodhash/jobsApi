@@ -46,14 +46,24 @@ HTTP 200
 [Captures]
 JohnToken: jsonpath "$.token"
 
-
 # John - Create a Job
 POST {{JOBS}}
 Authorization: Bearer {{JohnToken}}
 Content-Type: application/json
 {
-  "company": "kyc",
-  "position": "intern"
+  "company": "kyy",
+  "position": "testing xss protection"
+}
+
+
+
+# John - Create a malicious Job
+POST {{JOBS}}
+Authorization: Bearer {{JohnToken}}
+Content-Type: application/json
+{
+  "company": "<script>alert('XSS_boooooy!');</script>",
+  "position": "testing xss protection"
 }
 
 
@@ -63,7 +73,7 @@ Authorization: Bearer {{JohnToken}}
 
 
 # John - Get a single job
-GET {{JOBS}}/68323c7764372a6e1068e0220
+GET {{JOBS}}/683332774d54fd35c3ea6f0b
 Authorization: Bearer {{JohnToken}}
 # Authorization: Bearer {{AnnToken}}
 
@@ -78,7 +88,7 @@ Authorization: Bearer {{JohnToken}}
 
 
 # John - Delete a job
-DELETE {{JOBS}}/68323bc71a461025749f0f9f
+DELETE {{JOBS}}/683331ee82a232ebbae651a6
 Authorization: Bearer {{JohnToken}}
 
 
