@@ -9,8 +9,8 @@ import { jobsRouter } from './routes/jobs'
 import { authMW } from './middleware/authentication'
 import helmet, { xssFilter } from 'helmet'
 import cors from 'cors'
-import xss from 'xss'
-import xssFilters from 'xss-filters'
+import xssClean from 'xss-clean'
+// import xssFilters from 'xss-filters'
 import rateLimiter from 'express-rate-limit'
 
 const app = express()
@@ -20,10 +20,11 @@ dotenv.config()
 app.use(express.json() )
 
 // Security MW
-// app.use(xss()) // deprecated
+app.use(xssClean()) // deprecated
 app.use(helmet())
 app.use(cors())
-app.use(xssFilter())
+app.use(xssClean())
+// app.use(xssFilters())
 
 // app.set('trust proxy', 1) // deprecated?
 app.use(rateLimiter({
